@@ -215,7 +215,7 @@ async function stealFriendWater() {
                         }
                     }
                 }
-                await $.wait(1000)
+                await $.wait(3300)
             }
         }
     } else {
@@ -253,19 +253,19 @@ async function doTask() {
                         continue;
                     case 57:
                         await jxdoublesign1('https://m.jingxi.com/jxbfd/user/DoubleSignDeal?g_ty=h5&g_tk=&appCode=msd1188198&__t=1657108409440&dwEnv=7&strDeviceId=a3b4e844090b28d5c38e7529af8115172079be4d&strZone=jxbfd&bizCode=jxbfd&source=jxbfd&_cfd_t=1657108409190&_stk=__t%2C_cfd_t%2CbizCode%2CdwEnv%2Csource%2CstrDeviceId%2CstrZone&_ste=1&h5st=20220706195330228%3B1980457211661562%3B10032%3Btk02w78551ad830nuMcGB4Qsv9QxapLP7gZdOCYE5PVV%2Bna%2Bb4KU21drJq64oP82965Vdc1tGqVU%2Flp7ydcZ5XgH0Feh%3B241b6f1d21bf8e41f380a5dd29a7bac2a6f1f65a0c7ef1b1f751eaea4c40dd9c%3B3.0%3B1657108410228&sceneval=2');
-                        await $.wait(2000);
+                        await $.wait(3600);
                         await jxdoublesign1('https://wq.jd.com/jxjdsignin/SignedInfo?channel=jx_zdddsq&_t=1658021925021&h5st=20220717093845024%3B5548444396555217%3B0f6ed%3Btk02w9b851b9c18nin7CZjR7vNSlwRexAOGWbYAbl85d9DiQJ1SufW8ZQEQ%2FSygreq626CVRO2gT8DwUUTLBXGyK6wam%3B7eb86560860f8f60ad3b679c34f89aacf891b5a85580efd0a30c355537bfec54%3B3.0%3B1658021925024&_stk=_t%2Cchannel&_=1658021925027&sceneval=2&g_login_type=1&g_ty=ajax&appCode=msc588d6d5');
-                        await $.wait(1000);
+                        await $.wait(2700);
                         await jxdoublesign1('https://wq.jd.com/jxjdsignin/IssueReward?channel=jx_zdddsq&_t=1658021926276&h5st=20220717093846279%3B5548444396555217%3B0f6ed%3Btk02w9b851b9c18nin7CZjR7vNSlwRexAOGWbYAbl85d9DiQJ1SufW8ZQEQ%2FSygreq626CVRO2gT8DwUUTLBXGyK6wam%3Be2d7b6810b3bd1b9d9692d354ecbb582e69afc64df19bd8d6c14632b1a65660c%3B3.0%3B1658021926279&_stk=_t%2Cchannel&sceneval=2&g_login_type=1&g_ty=ajax&appCode=msc588d6d5');
-                        await $.wait(1000);
+                        await $.wait(2800);
                         continue;
                     case 96:
                         //await tjdoublesign(`https://wq.jd.com/tjjdsignin/SignedInfo?channel=jx_zdddsq&_t=${Date.now()}&h5st=20221119212121629%3B7235812274907393%3B0f6ed%3Btk02w6ce01aef18nu1BI7ITY0GRHzGZYm4QAgvUlNI7sDNMkIIRWB5yQBcmGs48B1Kd89giyM6WMEBZoTeyTRE2yi6cO%3B97dcee4e91efeb5f884eb7feb1c8da1ef52ad53a90a0e3a3c74eb38f0136382d%3B3.0%3B1668864081629&_stk=_t%2Cchannel&_=1665408290814&sceneval=2&g_login_type=1&g_ty=ajax&appCode=msc588d6d5`);
-                        //await $.wait(2000);
+                        //await $.wait(2900);
                         //await tjdoublesign(`https://wq.jd.com/tjjdsignin/IssueReward?channel=jx_zdddsq&_t=${Date.now()}&h5st=20221119212121629%3B7235812274907393%3B0f6ed%3Btk02w6ce01aef18nu1BI7ITY0GRHzGZYm4QAgvUlNI7sDNMkIIRWB5yQBcmGs48B1Kd89giyM6WMEBZoTeyTRE2yi6cO%3B97dcee4e91efeb5f884eb7feb1c8da1ef52ad53a90a0e3a3c74eb38f0136382d%3B3.0%3B1668864081629&_stk=_t%2Cchannel&sceneval=2&g_login_type=1&g_ty=ajax&appCode=msc588d6d5`);
-                        //await $.wait(1000);
+                        //await $.wait(3200);
                         //await tjdoublesign(`https://wq.jd.com/tjjdsignin/SignedInfo?channel=jx_zdddsq&_t=${Date.now()}&h5st=20221119212121629%3B7235812274907393%3B0f6ed%3Btk02w6ce01aef18nu1BI7ITY0GRHzGZYm4QAgvUlNI7sDNMkIIRWB5yQBcmGs48B1Kd89giyM6WMEBZoTeyTRE2yi6cO%3B97dcee4e91efeb5f884eb7feb1c8da1ef52ad53a90a0e3a3c74eb38f0136382d%3B3.0%3B1668864081629&_stk=_t%2Cchannel&_=1665408290814&sceneval=2&g_login_type=1&g_ty=ajax&appCode=msc588d6d5`);
-                        //await $.wait(1000);
+                        //await $.wait(3300);
                         continue;
                     case 94:
                         continue;
@@ -463,7 +463,7 @@ async function doHelp() {
         } else {
             console.log(`助力失败: ${JSON.stringify($.helpResult)}`);
         }
-        await $.wait(2000)
+        await $.wait(4800)
     }
 }
 function showMsg() {
@@ -478,17 +478,17 @@ function showMsg() {
 
 async function farmtask() {
     await receivefruit();
-    await $.wait(500);
+    await $.wait(3100);
     await dofarm('gotConfigDataForBrand');
-    await $.wait(500);
+    await $.wait(1500);
     await dofarm('initForFarm');
-    await $.wait(500);
+    await $.wait(1800);
     await dofarm('taskInitForFarm');
-    await $.wait(500);
+    await $.wait(1300);
     await dofarm('farmMarkStatus');
-    await $.wait(500);
+    await $.wait(1700);
     await dofarm('initForFarm');
-    await $.wait(500);
+    await $.wait(2200);
 }
 async function receivefruit() {
     const body = {
@@ -791,7 +791,7 @@ function requestGet(function_id, body = {}) {
     body["monitor_source"] = "plant_app_plant_index";
     body["monitor_refer"] = "";
     return new Promise(async resolve => {
-        await $.wait(2000);
+        await $.wait(7200);
         const option = {
             url: `${JD_API_HOST}?functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=ld`,
             headers: {
@@ -853,7 +853,7 @@ function TotalBean() {
 }
 function request(function_id, body = {}) {
     return new Promise(async resolve => {
-        await $.wait(2000);
+        await $.wait(4500);
         $.post(taskUrl(function_id, body), (err, resp, data) => {
             try {
                 if (err) {
