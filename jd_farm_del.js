@@ -245,7 +245,7 @@ async function doTenWaterAgain() {
                   if ($.userMyCardRes.treeFinished){
                        break;
                   }
-                  await $.wait(500);
+                  await $.wait(3200);
                   await initForFarm();
                   totalEnergy  = $.farmInfo.farmUserPro.totalEnergy;
         }
@@ -257,7 +257,7 @@ async function doTenWaterAgain() {
         isFruitFinished = false;
         for (let i = 0; i < ($.farmInfo.farmUserPro.treeTotalEnergy - $.farmInfo.farmUserPro.treeEnergy) / 10; i++) {
             await waterGoodForFarm();
-            await $.wait(500);
+            await $.wait(2800);
             console.log(`本次浇水结果(水果马上就可兑换了):   ${JSON.stringify($.waterResult)}`);
             if ($.waterResult.code === '0') {
                 console.log('\n浇水10g成功\n');
@@ -355,7 +355,7 @@ async function turntableFarm() {
                 continue
             }
             await lotteryMasterHelp(code);
-            await $.wait(1000)
+            await $.wait(4200)
             // console.log('天天抽奖助力结果',lotteryMasterHelpRes.helpResult)
             if ($.lotteryMasterHelpRes.helpResult === undefined) break;
             if ($.lotteryMasterHelpRes.helpResult.code === '0') {
@@ -379,7 +379,7 @@ async function getExtraAward() {
                     let vo = $.farmAssistResult.assistStageList[key]
                     if (vo.stageStaus === 2) {
                         await receiveStageEnergy();
-                        await $.wait(500);
+                        await $.wait(3600);
                         if ($.receiveStageEnergy.code === "0") {
                             console.log(`成功领取第${Number(key) + 1}段助力奖励：【${$.receiveStageEnergy.amount}】g水`)
                             num += $.receiveStageEnergy.amount
@@ -463,7 +463,7 @@ async function masterHelpShare() {
             continue
         }
         await masterHelp(code);
-        await $.wait(1000)
+        await $.wait(4500)
         if ($.helpResult.code === '0') {
             if ($.helpResult.helpResult.code === '0') {
                 //助力成功
@@ -831,7 +831,7 @@ async function gotStageAwardForFarm(type) {
 }
 //浇水API
 async function waterGoodForFarm() {
-    await $.wait(1000);
+    await $.wait(5300);
     console.log('等待了1秒');
 
     const functionId = arguments.callee.name.toString();
@@ -842,7 +842,7 @@ async function initForTurntableFarm() {
     $.initForTurntableFarmRes = await request(arguments.callee.name.toString(), { version: 4, channel: 1 });
 }
 async function lotteryForTurntableFarm() {
-    await $.wait(2000);
+    await $.wait(4900);
     console.log('等待了2秒');
     $.lotteryRes = await request(arguments.callee.name.toString(), { type: 1, version: 4, channel: 1 });
 }
@@ -1003,7 +1003,7 @@ async function signForFarm() {
  * 初始化农场, 可获取果树及用户信息API
  */
 async function initForFarm() {
-    await $.wait(500);
+    await $.wait(3400);
     return new Promise(resolve => {
         const option = {
             url: `${JD_API_HOST}?functionId=initForFarm`,
