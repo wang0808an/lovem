@@ -51,7 +51,7 @@ if ($.isNode()) {
             console.log(JSON.stringify(e));
         }
 		if (i == 0 && $.flag) return;
-        await $.wait(1000);
+        await $.wait(3400);
     }
     if($.allInvite.length > 0 ){
         console.log(`\n开始脚本内互助\n`);
@@ -74,7 +74,7 @@ if ($.isNode()) {
             $.encryptAssignmentId = $.codeInfo.encryptAssignmentId;
             console.log(`\n${$.UserName},去助力:${$.code}`);
             await takeRequest('help');
-            await $.wait(1000);
+            await $.wait(2800);
         }
     }
 })().catch((e) => {$.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')}).finally(() => {$.done();})
@@ -99,10 +99,10 @@ async function main() {
     console.log(`当前活动:${$.activityName},ID：${$.activityId},可抽奖次数:${$.callNumber}`);
     $.encryptProjectId = $.activityInfo.activityBaseInfo.encryptProjectId;
     useInfo[$.UserName] = $.encryptProjectId;
-    await $.wait(1000);
+    await $.wait(2600);
     $.taskList = [];
     await takeRequest('superBrandTaskList');
-    await $.wait(1000);
+    await $.wait(2100);
     await doTask();
     if($.runFlag){
         await takeRequest('superBrandSecondFloorMainPage');
@@ -112,7 +112,7 @@ async function main() {
     for (let i = 0; i < $.callNumber; i++) {
         console.log(`进行第${i+1}抽奖：`);;
         await takeRequest('superBrandTaskLottery');//抽奖
-        await $.wait(1000);
+        await $.wait(2900);
     }
 }
 async function doTask(){
@@ -135,7 +135,7 @@ async function doTask(){
                 $.runInfo = {'itemId':null};
             }
             await takeRequest('superBrandDoTask');
-            await $.wait(1000);
+            await $.wait(3300);
             $.runFlag = true;
         }else if($.oneTask.assignmentType === 2){  //助力任务
             console.log(`助力码：${$.oneTask.ext.assistTaskDetail.itemId}`);
@@ -158,7 +158,7 @@ async function doTask(){
                     let itemId = signList[j].itemId;
                     $.runInfo = {'itemId':itemId};
                     await takeRequest('superBrandDoTask');
-                    await $.wait(3000);
+                    await $.wait(4200);
                 }
             }
 			$.runFlag = true;
