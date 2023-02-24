@@ -60,7 +60,7 @@ const JD_API_HOST = 'https://api.m.jd.com/', actCode = 'visa-card-001';
         continue
       }
       await jdGlobal()
-      await $.wait(2*1000)
+      await $.wait(2*1500)
       if (IPError){
         console.log(`403 黑IP了，换IP或等一段时间`);
         break;
@@ -189,7 +189,7 @@ async function taskList() {
                 if (task.taskInfo.status === 0) {
                   if (task.taskType >= 1000) {
                     await doTask(task.taskType)
-                    await $.wait(1000)
+                    await $.wait(2600)
                   } else {
                     $.canStartNewItem = true
                     while ($.canStartNewItem) {
@@ -263,7 +263,7 @@ async function queryJoy() {
               if (data.data.taskBubbles)
                 for (let task of data.data.taskBubbles) {
                   await rewardTask(task.id, task.activeType)
-                  await $.wait(500)
+                  await $.wait(3400)
                 }
             }
           }
@@ -364,7 +364,7 @@ async function startItem(activeId, activeType) {
                 if (activeType !== 3)
                   videoBrowsing = activeType === 1 ? 5 : 10
                 console.log(`【${taskCompletionProgress + 1}/${taskCompletionLimit}】浏览商品任务记录成功，等待${videoBrowsing}秒`)
-                await $.wait(videoBrowsing * 1000)
+                await $.wait(videoBrowsing * 1600)
                 await endItem(data.data.uuid, activeType, activeId, activeType === 3 ? videoBrowsing : "")
               } else {
                 console.log(`${$.taskName}任务已达上限`)
@@ -503,7 +503,7 @@ function wheelsHome() {
                 console.log(`【幸运大转盘】剩余抽奖机会：${data.data.lotteryChances}`)
                 while(data.data.lotteryChances--) {
                   await wheelsLottery()
-                  await $.wait(500)
+                  await $.wait(2400)
                 }
               }
             }
@@ -697,7 +697,7 @@ async function orderReward(type) {
                 if (item.status === 2) {
                   console.log(`\n检测到【下单领红包】有奖励可领取，开始领取奖励`)
                   await orderReward(item.orderQty);
-                  await $.wait(2000)
+                  await $.wait(3600)
                 } else if (item.status === 1) {
                   console.log(`\n【下单领红包】暂无奖励可领取，再下${data.data.needOrderQty}单可领取${data.data.rewardAmount}元`)
                   break
