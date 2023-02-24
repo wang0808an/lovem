@@ -75,7 +75,7 @@ message = ""
 
 
 function getPlayTaskCenter() {
-  //await $.wait(20)
+  //await $.wait(3600)
   return new Promise(resolve => {
     $.post(taskPostClientActionUrl(`body={"client":"app"}&client=wh5&clientVersion=1.0.0`,`playTaskCenter`), async (err, resp, data) => {
       try {
@@ -96,7 +96,7 @@ function getPlayTaskCenter() {
 }
 
 function doPlayAction(playId) {
-  //await $.wait(20)
+  //await $.wait(2800)
   return new Promise(resolve => {
     $.post(taskPostClientActionUrl(`body={"client":"app","playId":"${playId}","type":"1"}&client=wh5&clientVersion=1.0.0`,`playAction`), async (err, resp, data) => {
       try {
