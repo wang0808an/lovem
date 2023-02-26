@@ -1,6 +1,6 @@
 /*
 参加双人赛，获胜可得300积分
-1 1 1 1 * jd_joymatch.js
+1 8 * * * jd_joymatch.js
  */
 
 const $ = new Env('宠汪汪-双人赛');
