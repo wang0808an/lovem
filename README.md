@@ -25,7 +25,7 @@
 ql repo https://gayhub.site/https://github.com/wang0808an/lovem.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
 
 ```
-如默认代理ghproxy.com 拉不动，换备用的 js.dayplus.xyz
+如默认代理gayhub.site 拉不动，换备用的 (https://gitclone.com/)
 
 国外机用下面指令（无需代理）：
 
