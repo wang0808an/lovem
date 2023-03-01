@@ -11,9 +11,7 @@
 
 ### 防走失[TG频道](https://t.me/love_miya)
 
-### 一键部署（2.11.3版本青龙，默认国内机拉库命令，建好后根据自己情况调整）
-
-###以上内容，原本是6dylan6大佬整理，部分脚本个人根据自己喜好进行修改，勿喜不用。
+### 以上内容，原本是6dylan6大佬整理，部分脚本个人根据自己喜好进行修改，勿喜不用。
 
 ## 拉库指令
 
@@ -35,8 +33,6 @@ ql repo https://gayhub.site/https://github.com/wang0808an/lovem.git "jd_|jx_|jdd
 ql repo https://github.com/wang0808an/lovem.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
 
 ```
-
-Gitee版不能正常拉取，已停止维护！（20220711）
 
 
 任务定时建议 50 7-23/2 * * *  
