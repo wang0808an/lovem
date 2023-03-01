@@ -9,15 +9,9 @@
 
 ### 上车注意安全，不用不明js，app，exe！
 
-### 防走失[TG频道](https://t.me/dylan_jdpro)
+### 防走失[TG频道](https://t.me/love_miya)
 
 ### 一键部署（2.11.3版本青龙，默认国内机拉库命令，建好后根据自己情况调整）
-
-使用root用户运行下面一串命令，支持Centos/Ubuntu系统
-
-```
-curl -sSL https://js.dayplus.xyz/https://raw.githubusercontent.com/6dylan6/jdpro/main/docker/ql1key.sh -o install.sh && bash install.sh
-```
 
 ## 拉库指令
 
@@ -28,7 +22,7 @@ curl -sSL https://js.dayplus.xyz/https://raw.githubusercontent.com/6dylan6/jdpro
 国内机用下面指令（带代理）：
 
 ```
-ql repo https://ghproxy.com/https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
+ql repo https://gayhub.site/https://github.com/wang0808an/lovem.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
 
 ```
 如默认代理ghproxy.com 拉不动，换备用的 js.dayplus.xyz
@@ -36,7 +30,7 @@ ql repo https://ghproxy.com/https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_"
 国外机用下面指令（无需代理）：
 
 ```
-ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
+ql repo https://github.com/wang0808an/lovem.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
 
 ```
 
@@ -46,9 +40,9 @@ Gitee版不能正常拉取，已停止维护！（20220711）
 任务定时建议 50 7-23/2 * * *  
 
 
-线报监控类脚本已移除，需要的到 https://github.com/6dylan6/jdm.git
+线报监控类脚本的需要的到6dy大佬的这个先线报 https://github.com/6dylan6/jdm.git
 
-自动评价 需要的到 https://github.com/6dylan6/auto_comment.git
+自动评价 需要的到6dy大佬这个地址 https://github.com/6dylan6/auto_comment.git
 
 
 ## 使用流程
@@ -112,6 +106,22 @@ export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
 8、建议调整任务运行超时时间，青龙默认1小时有些脚本跑不完就被强制kill，config.sh里配置。CommandTimeoutTime="3h"  即改为3小时，根据自己的号数量调整。
 </code></pre>
 </details>
+9、青龙基本指令
+注：以下命令都需要进容器内执行‘docker exec -it 容器名 bash’
+1. ql update                                                      # 更新并重启青龙
+2.  ql extra                                                         # 运行自定义脚本
+3.  ql raw <fileurl>                                            # 更新单个脚本文件
+4.  ql repo <库地址> <拉什么> <不拉什么> <依赖> <分支>   # 更新单个仓库的脚本
+5.  ql rmlog <days>                                           # 删除旧日志
+6.  ql bot                                                              # 启动tg-bot
+7.  ql check                                                          # 检测青龙环境并修复
+8.  ql resetlet                                                      # 重置登录错误次数
+9.  ql resettfa                                                      # 禁用两步登录
+10./cmd notify 哈喽             推送测试（发给机器人的需要开启cmd）
+注：脚本后修改  例：task 6dylan6_jdpro_jd_speed_sign.js desi JD_COOKIE 8-12
+1. conc JD_COOKIE                                           脚本并发
+2. desi JD_COOKIE 1 2 12-99（指定第12，12至99号ck运行）指定CK运行
+
 
 ## 加密脚本说明
 
