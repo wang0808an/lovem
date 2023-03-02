@@ -1,3 +1,6 @@
+5 5 * * * smzdm_daily.js
+
+const $ = new Env('什么值得买');
 const AppGetCookieRegex = /^https?:\/\/user-api\.smzdm\.com\/checkin$/;
 const smzdmCookieKey = "smzdm_cookie";
 const smzdmCookieIdKey = "smzdm_cookie_id";
