@@ -1,5 +1,5 @@
 /*
-5 5 * * * jd_asksign.js
+5 4 * * * jd_asksign.js
  */
 
 const $ = new Env('不知啥签到');
