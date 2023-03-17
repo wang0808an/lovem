@@ -1,4 +1,3 @@
-const $ = new Env('wskey转换');
 from requests import get, post, put, packages
 import requests
 from re import findall
@@ -9,7 +8,8 @@ import sys
 packages.urllib3.disable_warnings()
 
 """
-cron 57 21,9 * * *	
+cron 57 21,9 * * *
+new Env('京东wskey转换');
 """
 
 def printf(text):
