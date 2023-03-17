@@ -1,3 +1,4 @@
+const $ = new Env('wskey转换');
 from requests import get, post, put, packages
 import requests
 from re import findall
