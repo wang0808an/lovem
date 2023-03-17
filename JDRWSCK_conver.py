@@ -7,10 +7,10 @@ import os
 import sys
 packages.urllib3.disable_warnings()
 
-"""
-cron 57 21,9 * * *
-new Env('京东wskey转换');
-"""
+'''
+cron 57 21,9 * * *	
+new Env('wskey转换');
+'''
 
 def printf(text):
     print(text)
