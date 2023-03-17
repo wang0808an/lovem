@@ -7,10 +7,8 @@ import os
 import sys
 packages.urllib3.disable_warnings()
 
-'''
 cron 57 21,9 * * *	
 new Env('wskey转换Q');
-'''
 
 def printf(text):
     print(text)
