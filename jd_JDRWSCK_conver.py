@@ -8,7 +8,7 @@ import sys
 packages.urllib3.disable_warnings()
 
 '''
-cron 57 21,9 * * *	
+cron: 57 21,9 * * * jd_JDRWSCK_conver.py	
 new Env('wskey转换Q');
 '''
 
