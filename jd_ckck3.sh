@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+#10 23 * * * jd_ckck3.sh
 ## 版本号
 Ver="Build 2022831-001-Alpha"
 
