@@ -5,7 +5,7 @@
 
 变量:export jd_car_play_exchangeid="兑换ID"
 
-cron:11 11 11 11 *
+cron:59 59 9 * * *
 ============Quantumultx===============
 [task_local]
 #头文字J
