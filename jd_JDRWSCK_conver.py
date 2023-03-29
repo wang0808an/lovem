@@ -4,13 +4,14 @@ from re import findall
 from os.path import exists
 import json
 import os
-import sys
-packages.urllib3.disable_warnings()
+import sys,re
 
-'''
+packages.urllib3.disable_warnings()
+from urllib.parse import unquote
+"""
 cron: 57 21,9 * * * jd_JDRWSCK_conver.py	
 new Env('wskey转换Q');
-'''
+"""
 
 def printf(text):
     print(text)
@@ -97,10 +98,8 @@ def getcookie(key):
     headers = {
       'Content-Type': 'application/json'
     }
-
-    response = requests.request("POST", url, headers=headers, data=payload).json()
-    
     try:
+        response = requests.request("POST", url, headers=headers, data=payload).json()
         if response["success"]:
             cookie = response['data']['appck']       
             return cookie
@@ -167,7 +166,7 @@ def subcookie(pt_pin, cookie, token ,envtype):
                 post(url, json=body, headers=headers)
                 printf(f"新增cookie成功！pt_pin：{pt_pin}")
 def main():
-    printf("版本: 20230221")
+    printf("版本: 20230303")
     printf("说明1: 经测试转换后CK有效期是24小时，建议一天执行2次")
     printf("说明2: 扫码后的wskey不能用以前的WSKEY转换脚本转换")
     printf("说明3: 如果用Wxpusher通知需配置WP_APP_TOKEN_ONE和WP_APP_MAIN_UID，其中WP_APP_MAIN_UID是你的Wxpusher UID")
@@ -197,13 +196,16 @@ def main():
         
     if os.environ.get("RabbitToken")=="":
         printf('没有配置RabbitToken变量，例子: export RabbitToken="xxxxxxxxxxxxxxxx"')
-        return    
-    
-    if os.environ.get("WP_APP_TOKEN_ONE")=="" or os.environ.get("WP_APP_MAIN_UID")=="":
-        printf('没有配置Wxpusher相关变量,将调用sendNotify.py发送通知')
-    else:
-        printf('检测到已配置Wxpusher相关变量,将使用Wxpusher发送通知')
-        iswxpusher=True
+        return
+        
+    try:
+        if os.environ.get("WP_APP_TOKEN_ONE")=="" or os.environ.get("WP_APP_MAIN_UID")=="":
+            printf('没有配置Wxpusher相关变量,将调用sendNotify.py发送通知')
+        else:
+            printf('检测到已配置Wxpusher相关变量,将使用Wxpusher发送通知')
+            iswxpusher=True
+    except:
+        iswxpusher=False
 
     printf("\n===============开始转换==============")
     resurt=""
@@ -221,6 +223,9 @@ def main():
     datas = get(url, params=body, headers=headers).json()['data']
     for data in datas:
         key = data['value']
+        if re.search('%', key):
+            key = unquote(key, 'utf-8')
+            
         pin = key.split(";")[0].split("=")[1]
         for num in range(0,5):
             cookie = getcookie(key)
