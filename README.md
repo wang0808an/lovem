@@ -22,7 +22,7 @@
 国内机用下面指令（带代理）：
 
 ```
-ql repo https://gayhub.site/https://github.com/wang0808an/lovem.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
+ql repo https://gayhub.site/https://github.com/wang0808an/lovem.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|ql|sendNotify"
 
 ```
 如默认代理gayhub.site 拉不动，换备用的 (https://gitclone.com/)
@@ -30,7 +30,7 @@ ql repo https://gayhub.site/https://github.com/wang0808an/lovem.git "jd_|jx_|jdd
 国外机用下面指令（无需代理）：
 
 ```
-ql repo https://github.com/wang0808an/lovem.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
+ql repo https://github.com/wang0808an/lovem.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|ql|sendNotify"
 
 ```
 
