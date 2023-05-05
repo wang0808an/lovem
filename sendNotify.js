@@ -17,7 +17,7 @@
  
  */
 //详细说明参考 https://github.com/ccwav/QLScript2.
-cron "6 6 6 6"
+1 1 1 1 1 sendNotify.js
 const querystring = require('querystring');
 const exec = require('child_process').exec;
 const $ = new Env();
