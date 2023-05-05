@@ -15,6 +15,7 @@
  * @param author 通知底部作者`  (非必要)
  * @param strsummary 指定某些微信模板通知的预览信息，空则默认为desp  (非必要)
  
+1 1 1 1 1 sendNotify.js
  */
 //详细说明参考 https://github.com/ccwav/QLScript2.
 1 1 1 1 1 sendNotify.js
