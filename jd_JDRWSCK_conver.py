@@ -25,16 +25,11 @@ def load_send():
             from sendNotify import send
         except:
             send=False
-            printf("加载sendNotify.py的通知服务失败，请检查~")
+            printf("加载通知服务失败~")
     else:
         send=False
-        printf("加载通知服务失败,缺少sendNotify.py文件")
+        printf("加载通知服务失败~")
 load_send()
-
-signurl="https://api.nolanstore.top/sign"
-if os.environ.get("SIGNURL")!=None:
-    if os.environ.get("SIGNURL")!="":
-        signurl=os.environ.get("SIGNURL")
 
 def send_notification(title, content,summary):
     # Add your own WxPusher API key here
@@ -88,60 +83,34 @@ def send_notification(title, content,summary):
         printf("WxPusher 发送通知消息成功!")
     else:
         printf(res.text)
-
-def get_sign_wskey():
-    body = {
-        "fn":"genToken",
-        "body":{"url": "https://plogin.m.jd.com/jd-mlogin/static/html/appjmp_blank.html"}
-    }
-    headers = {"user-agent": "JD4iPhone/167774 (iPhone; iOS 14.6; Scale/2.00)"}
-    try:
-        url = signurl
-        data = post(url, headers=headers, json=body).json()
-        sign = data['body']
-    except Exception as error:
-        print(f"【错误】获取sign、body时：\n{error}\n将使用固定sign、body进行获取cookie")
-        sign = "client=apple&clientVersion=10.0.10&uuid=a1e779b4f56e4fd3b51af4b1d3ca3f13&st=1635391223795&sign=a1d6386f9455999594208ba36541ffda&sv=120"
-    return sign
-
-def getcookie_wskey(key):
-    body = "body=%7B%22to%22%3A%22https%3A//plogin.m.jd.com/jd-mlogin/static/html/appjmp_blank.html%22%7D"
-    pin = findall("pin=([^;]*);", key)[0]
-    sign = get_sign_wskey()
-    url = f"https://api.m.jd.com/client.action?functionId=genToken&{sign}"
-    headers = {
-        "cookie": key,
-        'user-agent': "JD4iPhone/167774 (iPhone; iOS 14.6; Scale/2.00)",
-        'accept-language': 'zh-Hans-CN;q=1, en-CN;q=0.9',
-        'content-type': 'application/x-www-form-urlencoded;'
-    }
-    try:
-        token = post(url=url, headers=headers, data=body, verify=False).json()['tokenKey']
-    except Exception as error:
-        print(f"【错误】{unquote(pin)}在获取token时：\n{error}")
-        return pin, "False"
-    url = 'https://un.m.jd.com/cgi-bin/app/appjmp'
-    params = {
-        'tokenKey': token,
-        'to': 'https://plogin.m.jd.com/cgi-bin/m/thirdapp_auth_page',
-        'client_type': 'android',
-        'appid': 879,
-        'appup_type': 1,
-    }
-    try:
-        res = get(url=url, params=params, verify=False,
-                  allow_redirects=False).cookies.get_dict()        
-    except Exception as error:
-        print(f"【错误】{unquote(pin)}在获取cookie时：\n{error}")
-        return "Error"
     
-    if "app_open" in res['pt_key']:
-        cookie = f"pt_key={res['pt_key']};pt_pin={res['pt_pin']};"
-        return cookie
-    else:
-        ##printf("Error:"+str(res))
+   
+    
+    
+def getcookie(key):    
+    url = os.environ.get("Rabbiturl")
+    RabbitToken=os.environ.get("RabbitToken")
+    payload = json.dumps({
+      "wsck": key,
+      "RabbitToken": RabbitToken
+    })
+    headers = {
+      'Content-Type': 'application/json'
+    }
+    try:
+        response = requests.request("POST", url, headers=headers, data=payload).json()
+        if response["success"]:
+            cookie = response['data']['appck']       
+            return cookie
+        else:
+            printf("Error:"+str(response))
+            return ""
+    except:
+        if "No authorization" in str(response):
+            printf("Error:"+"又有SB将Rabbiturl填成青龙地址了......")
+        else:
+            printf("Error:"+str(response))
         return "Error"
-
 
 def subcookie(pt_pin, cookie, token ,envtype):
     if envtype=="v4":
@@ -199,11 +168,16 @@ def subcookie(pt_pin, cookie, token ,envtype):
                 post(url, json=body, headers=headers)
                 printf(f"新增cookie成功！pt_pin：{pt_pin}")
 def main():
-    printf("版本: 20230503V3")
-    printf("说明: 如果用Wxpusher通知需配置WP_APP_TOKEN_ONE和WP_APP_MAIN_UID，其中WP_APP_MAIN_UID是你的Wxpusher UID")
+    printf("版本: 20230503")
+    printf("说明1: 经测试转换后CK有效期是24小时，建议一天执行2次")
+    printf("说明2: 扫码后的wskey不能用以前的WSKEY转换脚本转换")
+    printf("说明3: 如果用Wxpusher通知需配置WP_APP_TOKEN_ONE和WP_APP_MAIN_UID，其中WP_APP_MAIN_UID是你的Wxpusher UID")
+    printf("说明4: 不支持加密的扫码wskey")
     printf("====================================")
     envtype=""
     config=""
+    Rabbiturl=""
+    RabbitToken=""
     iswxpusher=False
     if os.path.exists("/ql/config/auth.json"):
         envtype="ql"
@@ -220,7 +194,30 @@ def main():
     if config=="":
         printf(f"无法判断使用环境，退出脚本!")
         return 
-    printf("Sign服务器:"+signurl)    
+        
+    if os.environ.get("Rabbiturl")==None:
+        printf('没有配置Rabbiturl变量，例子: export Rabbiturl="http://兔子容器地址:端口号/api/wsck"')
+        return 
+    else:
+        if os.environ.get("Rabbiturl")=="":
+            printf('没有配置Rabbiturl变量，例子: export Rabbiturl="http://兔子容器地址:端口号/api/wsck"')
+            return 
+        else:
+            Rabbiturl=os.environ.get("Rabbiturl")
+            printf("Rabbiturl:"+Rabbiturl)
+        
+    if os.environ.get("RabbitToken")==None:
+        printf('没有配置RabbitToken变量，例子: export RabbitToken="xxxxxxxxxxxxxxxx"')
+        return
+    else:
+        if os.environ.get("RabbitToken")=="":
+            printf('没有配置RabbitToken变量，例子: export RabbitToken="xxxxxxxxxxxxxxxx"')
+            return
+        else:
+            RabbitToken=os.environ.get("RabbitToken")
+            printf("RabbitToken:"+RabbitToken)
+           
+    printf("\n====================================")
     try:
         if os.environ.get("WP_APP_TOKEN_ONE")==None or os.environ.get("WP_APP_MAIN_UID")==None:
             printf('没有配置Wxpusher相关变量,将调用sendNotify.py发送通知')
@@ -233,53 +230,57 @@ def main():
     except:
         iswxpusher=False
 
-    printf("\n===============开始转换JD_WSCK==============")
+    printf("\n===============开始转换==============")
     resurt=""
     resurt1=""
     resurt2=""
     summary=""
-
     with open(config, "r", encoding="utf-8") as f1:
         token = json.load(f1)['token']
     url = 'http://127.0.0.1:5600/api/envs'
     headers = {'Authorization': f'Bearer {token}'}
     body = {
-        'searchValue': 'JD_WSCK',
+        'searchValue': 'JD_R_WSCK',
         'Authorization': f'Bearer {token}'
     }
     datas = get(url, params=body, headers=headers).json()['data']
     for data in datas:
-        key = data['value']
+        key = data['value'] 
         pin = key.split(";")[0].split("=")[1]
         newpin=pin
-        cookie = getcookie_wskey(key)
-        
         if re.search('%', pin):
             newpin = unquote(pin, 'utf-8')
             
+        for num in range(0,5):
+            cookie = getcookie(key)
+            if cookie!="" and cookie!="Error":
+                break
+            else:
+                printf(f"pin为{newpin}的wskey转换失败，重试....")        
+        
         if "app_open" in cookie:
-            #printf("转换成功:"cookie)     
-            orgpin = cookie.split(";")[1].split("=")[1]            
+            #printf("转换成功:"cookie)
+            orgpin = cookie.split(";")[1].split("=")[1]
             subcookie(orgpin, cookie, token, envtype)
             resurt1=resurt1+f"pt_pin更新成功：{newpin}\n"
         else:            
             message = f"pin为{newpin}的wskey可能过期了！"
             printf(message)
             resurt2=resurt2+f"pt_pin更新失败：{newpin}\n"
-               
+        
+            
     if resurt2!="": 
         resurt="👇👇👇👇👇转换异常👇👇👇👇👇\n"+resurt2+"\n"
         summary="部分CK转换异常"
         
-        if resurt1!="": 
-            resurt=resurt+"👇👇👇👇👇转换成功👇👇👇👇👇\n"+resurt1
-            if summary=="":
-                summary="全部转换成功"
-                
-        if iswxpusher:
-            send_notification("Rabbit JD_WSCK转换结果",resurt,summary)
-        else:
-            send("Rabbit JD_WSCK转换结果",resurt)
+    if resurt1!="": 
+        resurt=resurt+"👇👇👇👇👇转换成功👇👇👇👇👇\n"+resurt1
+        if summary=="":
+            summary="全部转换成功"
+    if iswxpusher:
+        send_notification("Rabbit wskey转换结果",resurt,summary)
+    else:
+        send("Rabbit wskey转换结果",resurt)
 
 if __name__ == '__main__':
     main()
