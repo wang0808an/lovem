@@ -3,7 +3,7 @@
 
 #Modify: Kirin
 """
-cron 6 6 6 6	
+cron: 1 1 1 1 1 sendNotify.py	
 """
 from curses.ascii import FS
 import sys
