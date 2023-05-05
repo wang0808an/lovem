@@ -2,7 +2,9 @@
 # _*_ coding:utf-8 _*_
 
 #Modify: Kirin
-
+"""
+cron 6 6 6 6	
+"""
 from curses.ascii import FS
 import sys
 import os, re
