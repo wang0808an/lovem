@@ -1,3 +1,6 @@
+"""
+cron: 30 9,21 * * * JD_WSCK_conver.py	
+"""
 from requests import get, post, put, packages
 import requests
 from re import findall
