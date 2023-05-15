@@ -9,7 +9,7 @@ import sys,re
 packages.urllib3.disable_warnings()
 from urllib.parse import unquote
 """
-cron 57 21,9 * * *	
+cron: 57 21,9 * * *	
 """
 
 def printf(text):
