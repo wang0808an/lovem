@@ -1,6 +1,6 @@
 /*
 东东农场邀请好友奖励
-8 1 * * * jd_farm_del.js
+8 1 * * * gj_farm_del.js
 updatetime:2022/12/22
 dlan
 */
