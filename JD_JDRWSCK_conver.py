@@ -9,8 +9,9 @@ import sys,re
 packages.urllib3.disable_warnings()
 from urllib.parse import unquote
 """
-cron: 57 21,9 * * *	
+cron 57 21,9 * * *	
 """
+hadsend=True
 
 def printf(text):
     print(text)
@@ -18,17 +19,20 @@ def printf(text):
     
 def load_send():
     global send
+    global hadsend
     cur_path = os.path.abspath(os.path.dirname(__file__))
     sys.path.append(cur_path)
     if os.path.exists(cur_path + "/sendNotify.py"):
         try:
             from sendNotify import send
+            hadsend=True
         except:
-            send=False
-            printf("加载通知服务失败~")
+            printf("加载sendNotify.py的通知服务失败，请检查~")
+            hadsend=False
     else:
-        send=False
-        printf("加载通知服务失败~")
+        printf("加载通知服务失败,缺少sendNotify.py文件")
+        hadsend=False
+        
 load_send()
 
 def send_notification(title, content,summary):
@@ -103,13 +107,13 @@ def getcookie(key):
             cookie = response['data']['appck']       
             return cookie
         else:
-            printf("Error:"+str(response))
-            return ""
+            if "No authorization" in str(response):
+                printf("Error:"+"又有SB将Rabbiturl填成青龙地址了......")
+            else:
+                printf("Error:"+str(response))
+            return "Error:"+str(response)
     except:
-        if "No authorization" in str(response):
-            printf("Error:"+"又有SB将Rabbiturl填成青龙地址了......")
-        else:
-            printf("Error:"+str(response))
+        printf("Error:"+str(response))
         return "Error"
 
 def subcookie(pt_pin, cookie, token ,envtype):
@@ -168,11 +172,11 @@ def subcookie(pt_pin, cookie, token ,envtype):
                 post(url, json=body, headers=headers)
                 printf(f"新增cookie成功！pt_pin：{pt_pin}")
 def main():
-    printf("版本: 20230503")
+    printf("版本: 20230520")
     printf("说明1: 经测试转换后CK有效期是24小时，建议一天执行2次")
-    printf("说明2: 扫码后的wskey不能用以前的WSKEY转换脚本转换")
+    printf("说明2: 扫码后的JD_R_WSCK不能用以前的WSKEY转换脚本转换")
     printf("说明3: 如果用Wxpusher通知需配置WP_APP_TOKEN_ONE和WP_APP_MAIN_UID，其中WP_APP_MAIN_UID是你的Wxpusher UID")
-    printf("说明4: 不支持加密的扫码wskey")
+    printf("说明4: 不支持加密的扫码JD_R_WSCK")
     printf("====================================")
     envtype=""
     config=""
@@ -245,42 +249,64 @@ def main():
     }
     datas = get(url, params=body, headers=headers).json()['data']
     for data in datas:
+        if data['status']!=0:
+            continue
         key = data['value'] 
         pin = key.split(";")[0].split("=")[1]
         newpin=pin
+        isok=True
         if re.search('%', pin):
             newpin = unquote(pin, 'utf-8')
             
         for num in range(0,5):
             cookie = getcookie(key)
-            if cookie!="" and cookie!="Error":
+            if cookie!="" and "Error" not in cookie:
                 break
             else:
-                printf(f"pin为{newpin}的wskey转换失败，重试....")        
+                if "a2 status is invalid" in cookie:
+                    isok=False
+                    break
+                else:
+                    printf(f"pin为{newpin}的JD_R_WSCK转换失败，重试....")        
         
         if "app_open" in cookie:
             #printf("转换成功:"cookie)
             orgpin = cookie.split(";")[1].split("=")[1]
             subcookie(orgpin, cookie, token, envtype)
             resurt1=resurt1+f"pt_pin更新成功：{newpin}\n"
-        else:            
-            message = f"pin为{newpin}的wskey可能过期了！"
-            printf(message)
-            resurt2=resurt2+f"pt_pin更新失败：{newpin}\n"
+        else:
+            if isok:
+                message = f"pin为{newpin}的JD_R_WSCK可能过期了！"
+                printf(message)
+                resurt2=resurt2+f"pt_pin更新失败：{newpin}\n"
+            else:
+                message = f"pin为{newpin}的JD_R_WSCK过期了！"
+                printf(message)
+                url = 'http://127.0.0.1:5600/api/envs/disable'
+                try:
+                    body = [data['_id']]
+                except:   
+                    body = [data['id']]
+                put(url, json=body, headers=headers)                
+                printf(f"pin为{newpin}的JD_R_WSCK已禁用")
+                resurt2=resurt2+f"pin为{newpin}的JD_R_WSCK已禁用\n"
         
             
     if resurt2!="": 
         resurt="👇👇👇👇👇转换异常👇👇👇👇👇\n"+resurt2+"\n"
-        summary="部分CK转换异常"
+        summary="(部分异常)"
         
     if resurt1!="": 
         resurt=resurt+"👇👇👇👇👇转换成功👇👇👇👇👇\n"+resurt1
         if summary=="":
-            summary="全部转换成功"
+            summary="(全部成功)"
     if iswxpusher:
-        send_notification("Rabbit wskey转换结果",resurt,summary)
-    else:
-        send("Rabbit wskey转换结果",resurt)
+        send_notification("Rabbit JD_R_WSCK"+summary,resurt,summary)
+    else:        
+        if hadsend:
+            send("Rabbit JD_R_WSCK转换结果",resurt)
+        else:
+            printf("没有启用通知!")
 
 if __name__ == '__main__':
     main()
